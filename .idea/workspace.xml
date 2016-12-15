@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f036d79a-1fc0-4a50-b5fb-2741616e2bf5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js" afterPath="$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js" />
     </list>
     <ignored path="SMT4AEncyclopedia.iws" />
@@ -62,11 +63,9 @@
       <file leaf-file-name="CreatureList.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-              <folding>
-                <element signature="e#43#69#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="66">
+              <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -379,12 +378,12 @@
       <workItem from="1481595685226" duration="221000" />
       <workItem from="1481682557021" duration="174000" />
       <workItem from="1481685001886" duration="619000" />
-      <workItem from="1481766013543" duration="2702000" />
+      <workItem from="1481766013543" duration="2951000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6222000" />
+    <option name="totallyTimeSpent" value="6471000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -828,11 +827,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-          <folding>
-            <element signature="e#43#69#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="66">
+          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

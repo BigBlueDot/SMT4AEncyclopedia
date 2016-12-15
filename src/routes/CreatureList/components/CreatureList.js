@@ -3,17 +3,12 @@
  */
 import React from 'react';
 import demon from '../../../data/demon.json';
+import Griddle from 'griddle-react';
 
 export const CreatureList = (props) => {
-  let creatures = [];
-  let index = 0;
-  demon.demons.forEach((d) => {
-    index++;
-    creatures.push(<p key={index}>{d.Name}</p>);
-  });
   return (
     <div style={{ margin: '0 auto' }} >
-      {creatures}
+      <Griddle results={demon.demons} />
     </div>
   );
 }

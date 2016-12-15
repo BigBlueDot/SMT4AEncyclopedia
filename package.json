@@ -80,6 +80,7 @@
     "classnames": "^2.2.4",
     "co-request": "^1.0.0",
     "debug": "^2.2.0",
+    "griddle-react": "^0.7.1",
     "history": "^2.1.2",
     "iconv-lite": "^0.4.13",
     "invariant": "^2.2.1",
