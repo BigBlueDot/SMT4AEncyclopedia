@@ -81,6 +81,53 @@ const getAverageValueForLevel = (levelValues) => {
   return results;
 };
 
+const convertToArray = (values) => {
+  let results = [];
+  Object.keys(values).forEach((key) => {
+    results[parseInt(key)] = values[key];
+  });
+  return results;
+};
+
+const getMovingAverage = (data, legSize) => {
+  // get the moving average 1-1 with the data by gradually increasing the window size
+  let results = [];
+
+  // verify that the windowSize works with the length of data passed in
+  if ((legSize * 2 + 1) > data.length) {
+    return data;
+  };
+
+  // get the data from the beginning
+  for (var i=0; i<=legSize; i++) {
+    let currentValue = 0;
+    for (var j=1; j <= i * 2; j++) {
+      currentValue += parseFloat(data[j]);
+    }
+    results[i] = currentValue / (i + 1);
+  }
+
+  // get the middle data
+  for (var i=legSize + 1; i < data.length - legSize; i++) {
+    let currentValue = 0;
+    for (var j=i - legSize; j <= i + legSize; j++) {
+      currentValue += data[j];
+    }
+    results[i] = currentValue / (legSize * 2 + 1)
+  }
+
+  // get the end data
+  for (var i=data.length - legSize; i<data.length; i++) {
+    let currentValue = 0;
+    for (var j=i - (data.length - i - 1); j < data.length; j++) {
+      currentValue += data[j];
+    }
+    results[i] = currentValue / ((data.length - i - 1) * 2 + 1);
+  }
+
+  return results;
+};
+
 export const Data = (props) => {
   const demons = demon.demons;
   // Get the level labels
@@ -104,25 +151,50 @@ export const Data = (props) => {
   const agilityAvg = getAverageValueForLevel(agilityValues);
   const luckAvg = getAverageValueForLevel(luckValues);
 
+  // Convert each set of data to an array
+  const hpArray = convertToArray(hpAvg);
+  const mpArray = convertToArray(mpAvg);
+  const strengthArray = convertToArray(strengthAvg);
+  const dexterityArray = convertToArray(dexterityAvg);
+  const magicArray = convertToArray(magicAvg);
+  const agilityArray = convertToArray(agilityAvg);
+  const luckArray = convertToArray(luckAvg);
+
+  // Get a moving average for each state
+  const hpMovingAvg = getMovingAverage(hpArray, 5);
+  const mpMovingAvg = getMovingAverage(mpArray, 5);
+  const strengthMovingAvg = getMovingAverage(strengthArray, 5);
+  const dexterityMovingAvg = getMovingAverage(dexterityArray, 5);
+  const magicMovingAvg = getMovingAverage(magicArray, 5);
+  const agilityMovingAvg = getMovingAverage(agilityArray, 5);
+  const luckMovingAvg = getMovingAverage(luckArray, 5);
+
   // Get data object for each stat
-  const hpData = getDataObject("HP", levelLabels, hpAvg);
-  const mpData = getDataObject("MP", levelLabels, mpAvg);
-  const strengthData = getDataObject("Strength", levelLabels, strengthAvg);
-  const dexterityData = getDataObject("Dexterity", levelLabels, dexterityAvg);
-  const magicData = getDataObject("Magic", levelLabels, magicAvg);
-  const agilityData = getDataObject("Agility", levelLabels, agilityAvg);
-  const luckData = getDataObject("Luck", levelLabels, luckAvg);
+  const hpData = getDataObject("HP", levelLabels, hpMovingAvg);
+  const mpData = getDataObject("MP", levelLabels, mpMovingAvg);
+  const strengthData = getDataObject("Strength", levelLabels, strengthMovingAvg);
+  const dexterityData = getDataObject("Dexterity", levelLabels, dexterityMovingAvg);
+  const magicData = getDataObject("Magic", levelLabels, magicMovingAvg);
+  const agilityData = getDataObject("Agility", levelLabels, agilityMovingAvg);
+  const luckData = getDataObject("Luck", levelLabels, luckMovingAvg);
 
   // Draw the charts
   return (
     <div style={{margin: '0 auto'}}>
-      <Line data={hpData}/>
-      <Line data={mpData}/>
-      <Line data={strengthData}/>
-      <Line data={dexterityData}/>
-      <Line data={magicData}/>
-      <Line data={agilityData}/>
-      <Line data={luckData}/>
+      HP:
+      <Line width="600" height="300" data={hpData}/>
+      MP:
+      <Line width="600" height="300"  data={mpData}/>
+      Strength:
+      <Line width="600" height="300"  data={strengthData}/>
+      Dexterity:
+      <Line width="600" height="300"  data={dexterityData}/>
+      Magic:
+      <Line width="600" height="300"  data={magicData}/>
+      Agility:
+      <Line width="600" height="300"  data={agilityData}/>
+      Luck:
+      <Line width="600" height="300"  data={luckData}/>
     </div>
   );
 };
