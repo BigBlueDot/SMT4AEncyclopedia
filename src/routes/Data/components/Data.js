@@ -5,6 +5,11 @@ import React from 'react';
 import {Line} from 'react-chartjs';
 import demon from '../../../data/demon.json';
 
+const options = {
+  pointDot: false,
+  showTooltips: false
+};
+
 const getDataObject = (dataLabel, labels, data) => {
   return {
     labels: labels,
@@ -19,17 +24,9 @@ const getDataObject = (dataLabel, labels, data) => {
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
-        pointBorderColor: "rgba(75,192,192,1)",
-        pointBackgroundColor: "#fff",
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-        pointHoverBorderColor: "rgba(220,220,220,1)",
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
         data: data,
         spanGaps: false,
+        radius: 0
       }
     ]
   }
@@ -47,6 +44,18 @@ const getLevelLabels = (demons) => {
   }
 
   return levels;
+};
+
+const skipLevelLabels = (levelLabels) => {
+  let newLabels = levelLabels.map((label) => {
+    if (parseInt(label) % 5 === 0) {
+      return label;
+    }
+    else {
+      return "";
+    }
+  });
+  return newLabels;
 };
 
 const getValuesForLevel = (demons, levelLabels, statName) => {
@@ -99,12 +108,12 @@ const getMovingAverage = (data, legSize) => {
   };
 
   // get the data from the beginning
-  for (var i=0; i<=legSize; i++) {
+  for (var i=1; i<=legSize; i++) {
     let currentValue = 0;
     for (var j=1; j <= i * 2; j++) {
       currentValue += parseFloat(data[j]);
     }
-    results[i] = currentValue / (i + 1);
+    results[i] = currentValue / (i * 2);
   }
 
   // get the middle data
@@ -169,32 +178,34 @@ export const Data = (props) => {
   const agilityMovingAvg = getMovingAverage(agilityArray, 5);
   const luckMovingAvg = getMovingAverage(luckArray, 5);
 
+  const skippedLabels = skipLevelLabels(levelLabels);
+
   // Get data object for each stat
-  const hpData = getDataObject("HP", levelLabels, hpMovingAvg);
-  const mpData = getDataObject("MP", levelLabels, mpMovingAvg);
-  const strengthData = getDataObject("Strength", levelLabels, strengthMovingAvg);
-  const dexterityData = getDataObject("Dexterity", levelLabels, dexterityMovingAvg);
-  const magicData = getDataObject("Magic", levelLabels, magicMovingAvg);
-  const agilityData = getDataObject("Agility", levelLabels, agilityMovingAvg);
-  const luckData = getDataObject("Luck", levelLabels, luckMovingAvg);
+  const hpData = getDataObject("HP", skippedLabels, hpMovingAvg);
+  const mpData = getDataObject("MP", skippedLabels, mpMovingAvg);
+  const strengthData = getDataObject("Strength", skippedLabels, strengthMovingAvg);
+  const dexterityData = getDataObject("Dexterity", skippedLabels, dexterityMovingAvg);
+  const magicData = getDataObject("Magic", skippedLabels, magicMovingAvg);
+  const agilityData = getDataObject("Agility", skippedLabels, agilityMovingAvg);
+  const luckData = getDataObject("Luck", skippedLabels, luckMovingAvg);
 
   // Draw the charts
   return (
     <div style={{margin: '0 auto'}}>
       HP:
-      <Line width="600" height="300" data={hpData}/>
+      <Line width="600" height="300" data={hpData} options={options}/>
       MP:
-      <Line width="600" height="300"  data={mpData}/>
+      <Line width="600" height="300"  data={mpData} options={options}/>
       Strength:
-      <Line width="600" height="300"  data={strengthData}/>
+      <Line width="600" height="300"  data={strengthData} options={options}/>
       Dexterity:
-      <Line width="600" height="300"  data={dexterityData}/>
+      <Line width="600" height="300"  data={dexterityData} options={options}/>
       Magic:
-      <Line width="600" height="300"  data={magicData}/>
+      <Line width="600" height="300"  data={magicData} options={options}/>
       Agility:
-      <Line width="600" height="300"  data={agilityData}/>
+      <Line width="600" height="300"  data={agilityData} options={options}/>
       Luck:
-      <Line width="600" height="300"  data={luckData}/>
+      <Line width="600" height="300"  data={luckData} options={options}/>
     </div>
   );
 };
