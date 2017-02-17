@@ -18,8 +18,9 @@ const getDataObject = (dataLabel, labels, data) => {
         label: dataLabel,
         fill: false,
         lineTension: 0.1,
-        backgroundColor: "rgba(75,192,192,0.4)",
+        backgroundColor: "rgba(5,255,5,0.4)",
         borderColor: "rgba(75,192,192,1)",
+        fillColor: "rgba(5,255,5,0.4)",
         borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
@@ -192,20 +193,67 @@ export const Data = (props) => {
   // Draw the charts
   return (
     <div style={{margin: '0 auto'}}>
-      HP:
-      <Line width="600" height="300" data={hpData} options={options}/>
-      MP:
-      <Line width="600" height="300"  data={mpData} options={options}/>
-      Strength:
-      <Line width="600" height="300"  data={strengthData} options={options}/>
-      Dexterity:
-      <Line width="600" height="300"  data={dexterityData} options={options}/>
-      Magic:
-      <Line width="600" height="300"  data={magicData} options={options}/>
-      Agility:
-      <Line width="600" height="300"  data={agilityData} options={options}/>
-      Luck:
-      <Line width="600" height="300"  data={luckData} options={options}/>
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>HP:</h3>
+        </div>
+        <div className="panel-body">
+          <Line width="700" height="300" data={hpData} options={options}/>
+        </div>
+      </div>
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>MP:</h3>
+        </div>
+        <div className="panel-body">
+          <Line width="700" height="300"  data={mpData} options={options}/>
+        </div>
+      </div>
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>
+            Strength:</h3>
+        </div>
+        <div className="panel-body">
+          <Line width="700" height="300"  data={strengthData} options={options}/>
+        </div>
+      </div>
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>
+            Dexterity:</h3>
+        </div>
+        <div className="panel-body">
+          <Line width="700" height="300"  data={dexterityData} options={options}/>
+        </div>
+      </div>
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>
+            Magic:</h3>
+        </div>
+        <div className="panel-body">
+          <Line width="700" height="300"  data={magicData} options={options}/>
+        </div>
+      </div>
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>
+            Agility:</h3>
+        </div>
+        <div className="panel-body">
+          <Line width="700" height="300"  data={agilityData} options={options}/>
+        </div>
+      </div>
+      <div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>
+            Luck:</h3>
+        </div>
+        <div className="panel-body">
+          <Line width="700" height="300"  data={luckData} options={options}/>
+        </div>
+      </div>
     </div>
   );
 };
