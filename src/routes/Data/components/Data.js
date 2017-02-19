@@ -80,125 +80,32 @@ class Data extends React.Component {
 
     const getDataLength = (data) => (data.datasets && data.datasets[0].data) ? data.datasets[0].data.length : 0;
 
+    const displayChart = (header, key, data, options) => (<div className="panel panel-primary">
+        <div className="panel-heading">
+          <h3>{header}:</h3>
+        </div>
+        <div className="panel-body">
+          <Line key={key} width="700" height="300" data={data} options={options}/>
+        </div>
+      </div>);
+
     // Draw the charts
     return (
       <div style={{margin: '0 auto'}}>
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3>HP:</h3>
-          </div>
-          <div className="panel-body">
-            <Line key={"HP" + getDataLength(hpData)} width="700" height="300" data={hpData} options={options}/>
-          </div>
-        </div>
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3>MP:</h3>
-          </div>
-          <div className="panel-body">
-            <Line key={"MP" + getDataLength(mpData)} width="700" height="300"  data={mpData} options={options}/>
-          </div>
-        </div>
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3>
-              Strength:</h3>
-          </div>
-          <div className="panel-body">
-            <Line key={"Strength" + getDataLength(strengthData)} width="700" height="300"  data={strengthData} options={options}/>
-          </div>
-        </div>
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3>
-              Dexterity:</h3>
-          </div>
-          <div className="panel-body">
-            <Line key={"Dexterity" + getDataLength(dexterityData)} width="700" height="300"  data={dexterityData} options={options}/>
-          </div>
-        </div>
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3>
-              Magic:</h3>
-          </div>
-          <div className="panel-body">
-            <Line key={"Magic" + getDataLength(magicData)} width="700" height="300"  data={magicData} options={options}/>
-          </div>
-        </div>
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3>
-              Agility:</h3>
-          </div>
-          <div className="panel-body">
-            <Line key={"Agility" + getDataLength(agilityData)} width="700" height="300"  data={agilityData} options={options}/>
-          </div>
-        </div>
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3>
-              Luck:</h3>
-          </div>
-          <div className="panel-body">
-            <Line key={"Luck" + getDataLength(luckData)} width="700" height="300"  data={luckData} options={options}/>
-          </div>
-        </div>
+        <h2>Stats by Level</h2>
+        <h2>Moving Averages of Stats by Level</h2>
+        <hr></hr>
+        {displayChart("HP", "HP" + getDataLength(hpData), hpData, options)}
+        {displayChart("MP", "MP" + getDataLength(mpData), mpData, options)}
+        {displayChart("Strength", "Strength" + getDataLength(strengthData), strengthData, options)}
+        {displayChart("Dexterity", "Dexterity" + getDataLength(dexterityData), dexterityData, options)}
+        {displayChart("Magic", "Magic" + getDataLength(magicData), magicData, options)}
+        {displayChart("Agility", "Agility" + getDataLength(agilityData), agilityData, options)}
+        {displayChart("Luck", "Luck" + getDataLength(luckData), luckData, options)}
       </div>
     );
   }
 }
-export const oldData = (props) => {
-  /*const demons = demon.demons;
-  // Get the level labels
-  const levelLabels = getLevelLabels(demons);
-
-  // Get values for each stat
-  const hpValues = getValuesForLevel(demons, levelLabels, "HP");
-  const mpValues = getValuesForLevel(demons, levelLabels, "MP");
-  const strengthValues = getValuesForLevel(demons, levelLabels, "Strength");
-  const dexterityValues = getValuesForLevel(demons, levelLabels, "Dexterity");
-  const magicValues = getValuesForLevel(demons, levelLabels, "Magic");
-  const agilityValues = getValuesForLevel(demons, levelLabels, "Agility");
-  const luckValues = getValuesForLevel(demons, levelLabels, "Luck");
-
-  // Get average values for each stat
-  const hpAvg = getAverageValueForLevel(hpValues);
-  const mpAvg = getAverageValueForLevel(mpValues);
-  const strengthAvg = getAverageValueForLevel(strengthValues);
-  const dexterityAvg = getAverageValueForLevel(dexterityValues);
-  const magicAvg = getAverageValueForLevel(magicValues);
-  const agilityAvg = getAverageValueForLevel(agilityValues);
-  const luckAvg = getAverageValueForLevel(luckValues);
-
-  // Convert each set of data to an array
-  const hpArray = convertToArray(hpAvg);
-  const mpArray = convertToArray(mpAvg);
-  const strengthArray = convertToArray(strengthAvg);
-  const dexterityArray = convertToArray(dexterityAvg);
-  const magicArray = convertToArray(magicAvg);
-  const agilityArray = convertToArray(agilityAvg);
-  const luckArray = convertToArray(luckAvg);
-
-  // Get a moving average for each state
-  const hpMovingAvg = getMovingAverage(hpArray, 5);
-  const mpMovingAvg = getMovingAverage(mpArray, 5);
-  const strengthMovingAvg = getMovingAverage(strengthArray, 5);
-  const dexterityMovingAvg = getMovingAverage(dexterityArray, 5);
-  const magicMovingAvg = getMovingAverage(magicArray, 5);
-  const agilityMovingAvg = getMovingAverage(agilityArray, 5);
-  const luckMovingAvg = getMovingAverage(luckArray, 5);
-
-
-  // Get data object for each stat
-  const hpData = getDataObject("HP", skippedLabels, hpMovingAvg);
-  const mpData = getDataObject("MP", skippedLabels, mpMovingAvg);
-  const strengthData = getDataObject("Strength", skippedLabels, strengthMovingAvg);
-  const dexterityData = getDataObject("Dexterity", skippedLabels, dexterityMovingAvg);
-  const magicData = getDataObject("Magic", skippedLabels, magicMovingAvg);
-  const agilityData = getDataObject("Agility", skippedLabels, agilityMovingAvg);
-  const luckData = getDataObject("Luck", skippedLabels, luckMovingAvg);*/
-};
 
 Data.propTypes = {
   levelLabels: React.PropTypes.array,

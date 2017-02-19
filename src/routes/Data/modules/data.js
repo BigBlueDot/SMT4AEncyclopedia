@@ -97,6 +97,27 @@ const getMovingAverage = (data, legSize) => {
   return results;
 };
 
+const getMeanAbsoluteDeviation = (values, centralValue) => {
+  // Take in a list of numbers and get the mean absolute deviation
+  let count = values.length;
+
+  let fullValues = 0;
+  values.forEach((value) => {
+    fullValues += Math.abs(value - centralValue);
+  });
+
+  return fullValues / count;
+};
+
+const getDeviations = (data, legSize) => {
+  // Take in the data and get mean absolute deviation based on leg size
+  let results = [];
+
+  for (let i=0; i<data.length; i++) {
+
+  }
+};
+
 export function loadLevelLabels () {
   return {
     type: "LOAD_LEVEL_LABELS",
@@ -149,7 +170,7 @@ const ACTION_HANDLERS = {
       const array = convertToArray(avg);
 
       // Get a moving average for each state
-      const movingAvg = getMovingAverage(array, 5);
+      const movingAvg = getMovingAverage(array, 2);
 
       return Object.assign({}, state, {
         movingAverages: {
