@@ -18,18 +18,6 @@ const getLevelLabels = (demons) => {
   return levels;
 };
 
-const skipLevelLabels = (levelLabels) => {
-  let newLabels = levelLabels.map((label) => {
-    if (parseInt(label) % 5 === 0) {
-      return label;
-    }
-    else {
-      return "";
-    }
-  });
-  return newLabels;
-};
-
 const getValuesForLevel = (demons, levelLabels, statName) => {
   // create empty array for each level
   let fullData = {};

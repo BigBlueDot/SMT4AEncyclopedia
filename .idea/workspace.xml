@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f036d79a-1fc0-4a50-b5fb-2741616e2bf5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/Data/components/Data.js" afterPath="$PROJECT_DIR$/src/routes/Data/components/Data.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/Data/modules/data.js" afterPath="$PROJECT_DIR$/src/routes/Data/modules/data.js" />
     </list>
     <ignored path="SMT4AEncyclopedia.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +29,8 @@
       <file leaf-file-name="Data.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/Data/components/Data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="33" column="2" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+            <state relative-caret-position="44">
+              <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
               <folding>
                 <element signature="e#43#69#0" expanded="true" />
               </folding>
@@ -94,8 +95,8 @@
       <file leaf-file-name="data.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/Data/modules/data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="139" column="41" selection-start-line="139" selection-start-column="41" selection-end-line="139" selection-end-column="41" />
+            <state relative-caret-position="396">
+              <caret line="18" column="2" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -550,12 +551,12 @@
       <workItem from="1487039168767" duration="4478000" />
       <workItem from="1487291336365" duration="4557000" />
       <workItem from="1487303631518" duration="5152000" />
-      <workItem from="1487526462608" duration="891000" />
+      <workItem from="1487526462608" duration="1577000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29881000" />
+    <option name="totallyTimeSpent" value="30567000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -949,16 +950,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Data/modules/data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="139" column="41" selection-start-line="139" selection-start-column="41" selection-end-line="139" selection-end-column="41" />
+        <state relative-caret-position="396">
+          <caret line="18" column="2" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Data/components/Data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="33" column="2" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+        <state relative-caret-position="44">
+          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
           <folding>
             <element signature="e#43#69#0" expanded="true" />
           </folding>

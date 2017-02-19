@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import {Line} from 'react-chartjs';
-import demon from '../../../data/demon.json';
 
 const options = {
   pointDot: false,
