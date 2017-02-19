@@ -2,6 +2,7 @@
  * Created by bigbl on 12/14/2016.
  */
 import { connect } from 'react-redux';
+import { loadMovingAvgStats, loadLevelLabels } from '../modules/data'
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
@@ -15,10 +16,16 @@ import Data from '../components/Data';
  implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
+  loadMovingAvgStats,
+  loadLevelLabels
 };
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => {
+  return {
+    levelLabels: state.data.levelLabels,
+    movingAverages: state.data.movingAverages,
+  };
+};
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 
