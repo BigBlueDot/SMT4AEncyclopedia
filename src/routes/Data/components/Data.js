@@ -2,7 +2,7 @@
  * Created by bigbl on 12/14/2016.
  */
 import React from 'react';
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {ScatterChart, Scatter, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 const options = {
   pointDot: false,
@@ -42,6 +42,13 @@ class Data extends React.Component {
     props.loadMovingAvgStats("Magic");
     props.loadMovingAvgStats("Agility");
     props.loadMovingAvgStats("Luck");
+    props.loadStatsByLevel("HP");
+    props.loadStatsByLevel("MP");
+    props.loadStatsByLevel("Strength");
+    props.loadStatsByLevel("Dexterity");
+    props.loadStatsByLevel("Magic");
+    props.loadStatsByLevel("Agility");
+    props.loadStatsByLevel("Luck");
   }
 
   render() {
@@ -65,10 +72,14 @@ class Data extends React.Component {
     const agilityData = getDataObject(agilityMovingAvg);
     const luckData = getDataObject(luckMovingAvg);
 
-    const getDataLength = (data) => (data.length);
+    const stats = ["HP", "MP", "Strength", "Dexterity", "Magic", "Agility", "Luck"];
+
+    const getStatsByLevel = (props, statName) => props.statsByLevel ? props.statsByLevel[statName] : [];
+
+    const getDataLength = (data) => (data ? data.length : 0);
 
     const displayRechart = (header, key, data) => {
-      if (hpMovingAvg && hpMovingAvg.length === 0) {
+      if (data && data.length === 0) {
         return <div></div>
       }
       else {
@@ -92,10 +103,40 @@ class Data extends React.Component {
       }
     };
 
+    const displayScatterChart = (header, key, data) => {
+      if (!data || data.length === 0) {
+        return <div key={"nostatdraw" + key}></div>
+      }
+      else {
+        return (<div className="panel panel-primary" key={"div" + key}>
+          <div className="panel-heading">
+            <h3>{header}:</h3>
+          </div>
+          <div className="panel-body">
+            <center>
+              <ScatterChart width={700} height={300}>
+                <XAxis dataKey={'x'} name='level' unit='cm'/>
+                <YAxis dataKey={'y'} name={header}/>
+                <Scatter data={data} fill='#8884d8'/>
+                <CartesianGrid />
+              </ScatterChart>
+            </center>
+          </div>
+        </div>)
+      }
+    };
+
+    const getStatsKey = (statName, data) => "statsByLevel" + statName + getDataLength(data);
+    const statsByLevelCollection = stats.map((statName) => displayScatterChart(statName,
+      getStatsKey(statName, getStatsByLevel(props, statName)),
+      getStatsByLevel(props, statName)));
+
     // Draw the charts
     return (
       <div style={{margin: '0 auto'}}>
         <h2>Stats by Level</h2>
+        <hr />
+        {statsByLevelCollection}
         <h2>Moving Averages of Stats by Level</h2>
         <hr></hr>
         {displayRechart("HP", "HP" + getDataLength(hpData), hpData)}
@@ -113,8 +154,10 @@ class Data extends React.Component {
 Data.propTypes = {
   levelLabels: React.PropTypes.array,
   movingAverages: React.PropTypes.object,
+  statsByLevel: React.PropTypes.object,
   loadMovingAvgStats: React.PropTypes.func.isRequired,
-  loadLevelLabels: React.PropTypes.func.isRequired
+  loadLevelLabels: React.PropTypes.func.isRequired,
+  loadStatsByLevel: React.PropTypes.func.isRequired,
 };
 
 export default Data;

@@ -18,6 +18,19 @@ const getLevelLabels = (demons) => {
   return levels;
 };
 
+const getStatsByLevel = (demons, statName) => {
+  const results = demons.filter((demon) => {
+    return demon.Level <= 100;
+  }).map((demon) => {
+    return {
+      x: demon.Level,
+      y: demon[statName],
+    };
+  });
+
+  return results;
+};
+
 const getValuesForLevel = (demons, levelLabels, statName) => {
   // create empty array for each level
   let fullData = {};
@@ -109,14 +122,12 @@ const getMeanAbsoluteDeviation = (values, centralValue) => {
   return fullValues / count;
 };
 
-const getDeviations = (data, legSize) => {
-  // Take in the data and get mean absolute deviation based on leg size
-  let results = [];
-
-  for (let i=0; i<data.length; i++) {
-
-  }
-};
+export function loadStatsByLevel (statName) {
+  return {
+    type: "LOAD_STATS_BY_LEVEL",
+    payload: statName
+  };
+}
 
 export function loadLevelLabels () {
   return {
@@ -138,7 +149,8 @@ export function loadMovingAvgStats (statName) {
 
 export const actions = {
   loadMovingAvgStats,
-  loadLevelLabels
+  loadLevelLabels,
+  loadStatsByLevel
 };
 
 // ------------------------------------
@@ -151,6 +163,24 @@ const ACTION_HANDLERS = {
       return Object.assign({}, state, {
         levelLabels: getLevelLabels(demon.demons),
       });
+    }
+    else {
+      return state;
+    }
+  },
+  ["LOAD_STATS_BY_LEVEL"]: (state, action) => {
+    const statName= action.payload;
+    if (!state.statsByLevel[statName]) {
+      // only load if this stat hasn't been loaded
+      const demons = demon.demons;
+      const values = getStatsByLevel(demons, statName);
+
+      return Object.assign({}, state, {
+        statsByLevel: {
+          ...state.statsByLevel,
+          [statName]: values
+        }
+      })
     }
     else {
       return state;
@@ -191,6 +221,7 @@ const ACTION_HANDLERS = {
 const initialState = {
   levelLabels: [],
   movingAverages: {},
+  statsByLevel: {},
 };
 export default function dataReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
