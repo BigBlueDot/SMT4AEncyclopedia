@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {ScatterChart, Scatter, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import regression from 'regression';
 
 const options = {
   pointDot: false,
@@ -29,6 +30,55 @@ const skipLevelLabels = (levelLabels) => {
     }
   });
   return skippedLabels;
+};
+
+const getQuartileRegression = (data) => {
+  const checkedData = data || [];
+  const regressionResult = regression('linear', checkedData.map((d) => [d.x, d.y]));
+  const upperData = checkedData.filter((dp) => dp.y > dp.x * regressionResult.equation[0] + regressionResult.equation[1]);
+  const lowerData = checkedData.filter((dp) => dp.y <= dp.x * regressionResult.equation[0] + regressionResult.equation[1]);
+  const upperRegressionResult = regression('linear', upperData.map((d) => [d.x, d.y]));
+  const lowerRegressionResult = regression('linear', lowerData.map((d) => [d.x, d.y]));
+
+  const upperRegression = {
+    equation: upperRegressionResult.string,
+    points: [{
+      x: 0, y: upperRegressionResult.equation[1]
+    }, {
+      x: 100, y: (upperRegressionResult.equation[0] * 100 + upperRegressionResult.equation[1])
+    }]
+  };
+  const centerRegression = {
+    equation: regressionResult.string,
+    points: [{
+      x: 0, y: regressionResult.equation[1]
+    }, {
+      x: 100, y: (regressionResult.equation[0] * 100 + regressionResult.equation[1])
+    }]
+  };
+  const lowerRegression = {
+    equation: lowerRegressionResult.string,
+    points: [{
+      x: 0, y: lowerRegressionResult.equation[1]
+    }, {
+      x: 100, y: (lowerRegressionResult.equation[0] * 100 + lowerRegressionResult.equation[1])
+    }]
+  };
+
+  return {
+    upperRegression, centerRegression, lowerRegression
+  };
+};
+
+const getRegression = (data) => {
+  const regressionTest = data || [];
+  const regressionResult = regression('linear', regressionTest.map((d) => [d.x, d.y]));
+
+  return [{
+    x: 0, y: regressionResult.equation[1]
+  }, {
+    x: 100, y: (regressionResult.equation[0] * 100 + regressionResult.equation[1])
+  }];
 };
 
 class Data extends React.Component {
@@ -103,7 +153,7 @@ class Data extends React.Component {
       }
     };
 
-    const displayScatterChart = (header, key, data) => {
+    const displayScatterChart = (header, key, data, regressionData) => {
       if (!data || data.length === 0) {
         return <div key={"nostatdraw" + key}></div>
       }
@@ -114,11 +164,19 @@ class Data extends React.Component {
           </div>
           <div className="panel-body">
             <center>
+              <ul className="list-group">
+                <li className="list-group-item">Upper Equation: {regressionData.upperRegression.equation}</li>
+                <li className="list-group-item">Center Equation: {regressionData.centerRegression.equation}</li>
+                <li className="list-group-item">Lower Equation: {regressionData.lowerRegression.equation}</li>
+              </ul>
               <ScatterChart width={700} height={300}>
                 <XAxis dataKey={'x'} name='level' unit='cm'/>
                 <YAxis dataKey={'y'} name={header}/>
                 <Scatter data={data} fill='#8884d8'/>
                 <CartesianGrid />
+                <Scatter data={regressionData.upperRegression.points} style={{strokeWidth: "4px"}} fill='#ff0000' line />
+                <Scatter data={regressionData.centerRegression.points} style={{strokeWidth: "4px"}} fill='#82ca9d' line />
+                <Scatter data={regressionData.lowerRegression.points} style={{strokeWidth: "4px"}} fill='#ff0000' line />
               </ScatterChart>
             </center>
           </div>
@@ -127,9 +185,13 @@ class Data extends React.Component {
     };
 
     const getStatsKey = (statName, data) => "statsByLevel" + statName + getDataLength(data);
-    const statsByLevelCollection = stats.map((statName) => displayScatterChart(statName,
-      getStatsKey(statName, getStatsByLevel(props, statName)),
-      getStatsByLevel(props, statName)));
+    const statsByLevelCollection = stats.map((statName) => {
+      const statByLevel = getStatsByLevel(props, statName);
+      return displayScatterChart(statName,
+        getStatsKey(statName, getStatsByLevel(props, statName)),
+        statByLevel,
+        getQuartileRegression(statByLevel))
+    });
 
     // Draw the charts
     return (
