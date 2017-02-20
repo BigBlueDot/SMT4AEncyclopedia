@@ -2,46 +2,33 @@
  * Created by bigbl on 12/14/2016.
  */
 import React from 'react';
-import {Line} from 'react-chartjs';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 const options = {
   pointDot: false,
   showTooltips: false
 };
 
-const getDataObject = (dataLabel, labels, data) => {
-  return {
-    labels: labels,
-    datasets: [
-      {
-        label: dataLabel,
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: "rgba(5,255,5,0.4)",
-        borderColor: "rgba(75,192,192,1)",
-        fillColor: "rgba(5,255,5,0.4)",
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        data: data,
-        spanGaps: false,
-        radius: 0
-      }
-    ]
-  }
+const getDataObject = (data) => {
+  let dataObject = data ? data.map((d, i) => {
+    return {x:i, value: d};
+  }) : [];
+
+  dataObject[0] = {
+    x:0, value: 0,
+  };
+
+  return dataObject;
 };
 
 const skipLevelLabels = (levelLabels) => {
-  let newLabels = levelLabels.map((label) => {
+  let skippedLabels = [];
+  levelLabels.forEach((label) => {
     if (parseInt(label) % 5 === 0) {
-      return label;
-    }
-    else {
-      return "";
+      skippedLabels.push(label);
     }
   });
-  return newLabels;
+  return skippedLabels;
 };
 
 class Data extends React.Component {
@@ -70,24 +57,40 @@ class Data extends React.Component {
     const luckMovingAvg = props.movingAverages ? props.movingAverages["Luck"] : [];
     const skippedLabels = skipLevelLabels(levelLabels);
 
-    const hpData = getDataObject("HP", skippedLabels, hpMovingAvg);
-    const mpData = getDataObject("MP", skippedLabels, mpMovingAvg);
-    const strengthData = getDataObject("Strength", skippedLabels, strengthMovingAvg);
-    const dexterityData = getDataObject("Dexterity", skippedLabels, dexterityMovingAvg);
-    const magicData = getDataObject("Magic", skippedLabels, magicMovingAvg);
-    const agilityData = getDataObject("Agility", skippedLabels, agilityMovingAvg);
-    const luckData = Object.assign({}, getDataObject("Luck", skippedLabels, luckMovingAvg));
+    const hpData = getDataObject(hpMovingAvg);
+    const mpData = getDataObject(mpMovingAvg);
+    const strengthData = getDataObject(strengthMovingAvg);
+    const dexterityData = getDataObject(dexterityMovingAvg);
+    const magicData = getDataObject(magicMovingAvg);
+    const agilityData = getDataObject(agilityMovingAvg);
+    const luckData = getDataObject(luckMovingAvg);
 
-    const getDataLength = (data) => (data.datasets && data.datasets[0].data) ? data.datasets[0].data.length : 0;
+    const getDataLength = (data) => (data.length);
 
-    const displayChart = (header, key, data, options) => (<div className="panel panel-primary">
-        <div className="panel-heading">
-          <h3>{header}:</h3>
-        </div>
-        <div className="panel-body">
-          <Line key={key} width="700" height="300" data={data} options={options}/>
-        </div>
-      </div>);
+    const displayRechart = (header, key, data) => {
+      if (hpMovingAvg && hpMovingAvg.length === 0) {
+        return <div></div>
+      }
+      else {
+        return (<div className="panel panel-primary">
+            <div className="panel-heading">
+              <h3>{header}:</h3>
+            </div>
+            <div className="panel-body">
+              <center>
+                <LineChart key={key} width={700} height={300}
+                           data={data}>
+                  <XAxis type="number" ticks={skippedLabels} dataKey="x"/>
+                  <YAxis />
+                  <CartesianGrid strokeDasharray="5 3"/>
+                  <Line dot={false} type="monotone" dataKey="value" stroke="#82ca9d"/>
+                </LineChart>
+              </center>
+            </div>
+          </div>
+        );
+      }
+    };
 
     // Draw the charts
     return (
@@ -95,13 +98,13 @@ class Data extends React.Component {
         <h2>Stats by Level</h2>
         <h2>Moving Averages of Stats by Level</h2>
         <hr></hr>
-        {displayChart("HP", "HP" + getDataLength(hpData), hpData, options)}
-        {displayChart("MP", "MP" + getDataLength(mpData), mpData, options)}
-        {displayChart("Strength", "Strength" + getDataLength(strengthData), strengthData, options)}
-        {displayChart("Dexterity", "Dexterity" + getDataLength(dexterityData), dexterityData, options)}
-        {displayChart("Magic", "Magic" + getDataLength(magicData), magicData, options)}
-        {displayChart("Agility", "Agility" + getDataLength(agilityData), agilityData, options)}
-        {displayChart("Luck", "Luck" + getDataLength(luckData), luckData, options)}
+        {displayRechart("HP", "HP" + getDataLength(hpData), hpData)}
+        {displayRechart("MP", "MP" + getDataLength(mpData), mpData)}
+        {displayRechart("Strength", "Strength" + getDataLength(strengthData), strengthData)}
+        {displayRechart("Dexterity", "Dexterity" + getDataLength(dexterityData), dexterityData)}
+        {displayRechart("Magic", "Magic" + getDataLength(magicData), magicData)}
+        {displayRechart("Agility", "Agility" + getDataLength(agilityData), agilityData)}
+        {displayRechart("Luck", "Luck" + getDataLength(luckData), luckData)}
       </div>
     );
   }
