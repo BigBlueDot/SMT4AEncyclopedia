@@ -13,24 +13,25 @@ const quartiles = {
 };
 
 const colors = {
-  [quartiles.TOP]: '#0000AA',
-  [quartiles.UPPER]: '#00AAAA',
-  [quartiles.LOWER]: '#AAAAAA',
-  [quartiles.BOTTOM]: '#FEFEFE',
+  [quartiles.TOP]: '#006400',
+  [quartiles.UPPER]: '#98fb98',
+  [quartiles.LOWER]: '#ffb6c1',
+  [quartiles.BOTTOM]: '#ff0000',
 };
 
-const getColorForHP = (level, value) => {
+const getColorForStat = (level, value, {upperB, upperM, centerB, centerM, lowerB, lowerM}) => {
   /*Upper Equation: y = 8.7x + 79.67
   Center Equation: y = 7.64x + 61.27
   Lower Equation: y = 6.5x + 52.95*/
-  if (value > 8.7 * level + 79.67) return colors[quartiles.TOP];
-  else if (value > 7.64 * level + 61.27) return colors[quartiles.UPPER];
-  else if (value > 6.5 * level + 52.95) return colors[quartiles.LOWER];
+  if (value > upperM * level + upperB) return colors[quartiles.TOP];
+  else if (value > centerM * level + centerB) return colors[quartiles.UPPER];
+  else if (value > lowerM * level + lowerB) return colors[quartiles.LOWER];
   else return colors[quartiles.BOTTOM];
 };
 
-const CustomHPColumn = ({value}) => {
-  return <span style={{ color: '#0000AA' }}>{value}</span>;
+const CustomStatColumn = ({data, metadata, rowData}) => {
+  const color = getColorForStat(rowData.Level, data, metadata);
+  return <span style={{ color: color }}>{data}</span>;
 };
 
 const columnMetadata = [{
@@ -52,6 +53,13 @@ const columnMetadata = [{
   columnName: "HP",
   displayName: "HP",
   sortable: true,
+  upperM: 8.7,
+  upperB: 79.67,
+  centerM: 7.64,
+  centerB: 61.27,
+  lowerM: 6.5,
+  lowerB: 52.95,
+  customComponent: CustomStatColumn,
   customCompareFn: function(item) {
     return parseFloat(item);
   }
@@ -59,6 +67,13 @@ const columnMetadata = [{
   columnName: "MP",
   displayName: "MP",
   sortable: true,
+  upperM: 4.86,
+  upperB: 43.88,
+  centerM: 3.89,
+  centerB: 32.34,
+  lowerM: 3.1,
+  lowerB: 26.57,
+  customComponent: CustomStatColumn,
   customCompareFn: function(item) {
     return parseFloat(item);
   }
@@ -66,6 +81,13 @@ const columnMetadata = [{
   columnName: "Strength",
   displayName: "Strength",
   sortable: true,
+  upperM: 1.31,
+  upperB: 7.58,
+  centerM: 1.03,
+  centerB: 4.93,
+  lowerM: 0.7,
+  lowerB: 6.59,
+  customComponent: CustomStatColumn,
   customCompareFn: function(item) {
     return parseFloat(item);
   }
@@ -73,6 +95,13 @@ const columnMetadata = [{
   columnName: "Dexterity",
   displayName: "Dexterity",
   sortable: true,
+  upperM: 1.07,
+  upperB: 10,
+  centerM: 0.91,
+  centerB: 6.31,
+  lowerM: 0.79,
+  lowerB: 6.69,
+  customComponent: CustomStatColumn,
   customCompareFn: function(item) {
     return parseFloat(item);
   }
@@ -80,6 +109,13 @@ const columnMetadata = [{
   columnName: "Magic",
   displayName: "Magic",
   sortable: true,
+  upperM: 1.43,
+  upperB: 4.35,
+  centerM: 1.2,
+  centerB: 0.37,
+  lowerM: 0.85,
+  lowerB: 1.06,
+  customComponent: CustomStatColumn,
   customCompareFn: function(item) {
     return parseFloat(item);
   }
@@ -87,6 +123,13 @@ const columnMetadata = [{
   columnName: "Agility",
   displayName: "Agility",
   sortable: true,
+  upperM: 1.13,
+  upperB: 9.49,
+  centerM: 0.99,
+  centerB: 8,
+  lowerM: 0.92,
+  lowerB: 5.43,
+  customComponent: CustomStatColumn,
   customCompareFn: function(item) {
     return parseFloat(item);
   }
@@ -94,6 +137,13 @@ const columnMetadata = [{
   columnName: "Luck",
   displayName: "Luck",
   sortable: true,
+  upperM: 1.14,
+  upperB: 7.63,
+  centerM: 1.08,
+  centerB: 6.39,
+  lowerM: 1,
+  lowerB: 5.28,
+  customComponent: CustomStatColumn,
   customCompareFn: function(item) {
     return parseFloat(item);
   }
