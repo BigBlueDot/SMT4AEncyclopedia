@@ -4,6 +4,7 @@
 import React from 'react';
 import demon from '../../../data/demon.json';
 import Griddle from 'griddle-react';
+import { Link } from 'react-router';
 
 const quartiles = {
   TOP: 'TOP',
@@ -34,10 +35,19 @@ const CustomStatColumn = ({data, metadata, rowData}) => {
   return <span style={{ color: color }}>{data}</span>;
 };
 
+const CustomNameColumn = ({data, metadata, rowData}) => {
+  return (<span>
+    <Link to={'/demon-display/' + data}>
+      {data}
+    </Link>
+  </span>);
+};
+
 const columnMetadata = [{
   columnName: "Name",
   displayName: "Name",
   sortable: true,
+  customComponent: CustomNameColumn,
 },{
   columnName: "Level",
   displayName: "Level",
