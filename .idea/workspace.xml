@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f036d79a-1fc0-4a50-b5fb-2741616e2bf5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/routes/SkillList/components/SkillList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/routes/SkillList/containers/SkillListContainer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/routes/SkillList/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/routes/SkillList/modules/skillList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/index.js" afterPath="$PROJECT_DIR$/src/routes/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/skill.json" afterPath="$PROJECT_DIR$/src/data/skill.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/SkillList/components/SkillList.js" afterPath="$PROJECT_DIR$/src/routes/SkillList/components/SkillList.js" />
     </list>
     <ignored path="SMT4AEncyclopedia.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,11 +36,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SkillList.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CreatureList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="68" column="17" selection-start-line="68" selection-start-column="17" selection-end-line="68" selection-end-column="17" />
+              <folding>
+                <element signature="e#43#69#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SkillList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/SkillList/components/SkillList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            <state relative-caret-position="308">
+              <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
               <folding>
                 <element signature="e#42#68#0" expanded="true" />
               </folding>
@@ -52,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="skill.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="skill.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/data/skill.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="0" column="61795" selection-start-line="0" selection-start-column="61784" selection-end-line="0" selection-end-column="61795" />
+            <state relative-caret-position="280">
+              <caret line="0" column="11766" selection-start-line="0" selection-start-column="11766" selection-end-line="0" selection-end-column="11766" />
               <folding />
             </state>
           </provider>
@@ -67,16 +75,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="660">
               <caret line="32" column="40" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -95,8 +93,8 @@
       <file leaf-file-name="reducers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/store/reducers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+            <state relative-caret-position="110">
+              <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -171,12 +169,12 @@
         <option value="$PROJECT_DIR$/src/routes/DemonDisplay/containers/DemonDisplayContainer.js" />
         <option value="$PROJECT_DIR$/src/routes/DemonDisplay/components/DemonDisplay.js" />
         <option value="$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js" />
-        <option value="$PROJECT_DIR$/src/data/skill.json" />
         <option value="$PROJECT_DIR$/src/routes/SkillList/index.js" />
         <option value="$PROJECT_DIR$/src/routes/SkillList/containers/SkillListContainer.js" />
         <option value="$PROJECT_DIR$/src/routes/SkillList/modules/skillList.js" />
         <option value="$PROJECT_DIR$/src/routes/index.js" />
         <option value="$PROJECT_DIR$/src/routes/SkillList/components/SkillList.js" />
+        <option value="$PROJECT_DIR$/src/data/skill.json" />
       </list>
     </option>
   </component>
@@ -389,12 +387,12 @@
       <workItem from="1487526462608" duration="21237000" />
       <workItem from="1487644974923" duration="4928000" />
       <workItem from="1488048976208" duration="705000" />
-      <workItem from="1488150700178" duration="2789000" />
+      <workItem from="1488150700178" duration="3708000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58649000" />
+    <option name="totallyTimeSpent" value="59568000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -698,16 +696,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="19" column="32" selection-start-line="0" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
-          <folding>
-            <element signature="e#43#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/CreatureList/containers/CreatureListContainer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="726">
@@ -736,14 +724,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/reducers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -790,21 +770,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/skill.json">
+    <entry file="file://$PROJECT_DIR$/src/store/reducers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="0" column="61795" selection-start-line="0" selection-start-column="61784" selection-end-line="0" selection-end-column="61795" />
+        <state relative-caret-position="110">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/CreatureList/components/CreatureList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="68" column="17" selection-start-line="68" selection-start-column="17" selection-end-line="68" selection-end-column="17" />
+          <folding>
+            <element signature="e#43#69#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/SkillList/components/SkillList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        <state relative-caret-position="308">
+          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
           <folding>
             <element signature="e#42#68#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/skill.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="0" column="11766" selection-start-line="0" selection-start-column="11766" selection-end-line="0" selection-end-column="11766" />
+          <folding />
         </state>
       </provider>
     </entry>

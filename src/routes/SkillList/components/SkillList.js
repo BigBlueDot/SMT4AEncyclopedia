@@ -31,6 +31,13 @@ const columnMetadata = [{
   displayName: "Target",
   sortable: true,
 },{
+  columnName: "Rank",
+  displayName: "Rank",
+  sortable: true,
+  customCompareFn: function(item) {
+    return parseFloat(item);
+  }
+},{
   columnName: "IsUnique",
   displayName: "IsUnique",
   sortable: true,
@@ -45,6 +52,7 @@ export const SkillList = (props) => {
         bodyHeight={400}
         useFixedHeader={true}
         showFilter={true}
+        columns={["SkillName", "Rank", "SkillType", "Description"]}
         columnMetadata={columnMetadata} />
     </div>
   );
