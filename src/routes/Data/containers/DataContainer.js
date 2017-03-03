@@ -2,7 +2,7 @@
  * Created by bigbl on 12/14/2016.
  */
 import { connect } from 'react-redux';
-import { loadMovingAvgStats, loadLevelLabels, loadStatsByLevel } from '../modules/data'
+import { loadMovingAvgStats, loadLevelLabels, loadStatsByLevel, loadSkillRanks, loadLearnedSkillRanks } from '../modules/data'
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
@@ -19,6 +19,8 @@ const mapDispatchToProps = {
   loadMovingAvgStats,
   loadLevelLabels,
   loadStatsByLevel,
+  loadSkillRanks,
+  loadLearnedSkillRanks
 };
 
 const mapStateToProps = (state) => {
@@ -26,6 +28,8 @@ const mapStateToProps = (state) => {
     levelLabels: state.data.levelLabels,
     movingAverages: state.data.movingAverages,
     statsByLevel: state.data.statsByLevel,
+    skillRankData: state.data.skillRankData,
+    learnedSkillRankData: state.data.learnedSkillRankData
   };
 };
 

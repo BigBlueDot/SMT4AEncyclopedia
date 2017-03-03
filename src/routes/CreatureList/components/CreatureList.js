@@ -157,17 +157,65 @@ const columnMetadata = [{
   customCompareFn: function(item) {
     return parseFloat(item);
   }
+},{
+  columnName: "SkillRank",
+  displayName: "Skill",
+  sortable: true,
+  upperM: .24,
+  upperB: 8.85,
+  centerM: 0.25,
+  centerB: 5.58,
+  lowerM: 0.21,
+  lowerB: 3.05,
+  customComponent: CustomStatColumn,
+  customCompareFn: function(item) {
+    return parseFloat(item);
+  }
+},{
+  columnName: "Growth",
+  displayName: "Growth",
+  sortable: true,
+  upperM: .24,
+  upperB: 8.38,
+  centerM: .25,
+  centerB: 5,
+  lowerM: .21,
+  lowerB: 2.56,
+  customComponent: CustomStatColumn,
+  customCompareFn: function(item) {
+    return parseFloat(item);
+  }
 }];
 
 export const CreatureList = (props) => {
+  const demons = demon.demons.map((demon) => {
+    let SkillRank = 0;
+    let Growth = 0;
+
+    demon.Skills.forEach((skill) => {
+      if (skill.LevelDiff === 0) {
+        SkillRank = SkillRank > skill.Rank ? SkillRank : skill.Rank;
+      }
+      else {
+        Growth = Growth > skill.Rank ? Growth : skill.Rank;
+      }
+    });
+
+    return {
+      ...demon,
+      SkillRank: SkillRank,
+      Growth: Growth,
+    }
+  });
   return (
     <div style={{ margin: '0 auto' }} >
       <Griddle
-        results={demon.demons}
+        results={demons}
         enableInfiniteScroll={true}
         bodyHeight={400}
         useFixedHeader={true}
         showFilter={true}
+        columns={["Name", "Level", "Race", "HP", "MP", "Strength", "Dexterity", "Magic", "Agility", "Luck", "SkillRank", "Growth"]}
         columnMetadata={columnMetadata} />
     </div>
   );

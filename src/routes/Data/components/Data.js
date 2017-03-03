@@ -99,6 +99,8 @@ class Data extends React.Component {
     props.loadStatsByLevel("Magic");
     props.loadStatsByLevel("Agility");
     props.loadStatsByLevel("Luck");
+    props.loadSkillRanks();
+    props.loadLearnedSkillRanks();
   }
 
   render() {
@@ -199,6 +201,10 @@ class Data extends React.Component {
         <h2>Stats by Level</h2>
         <hr />
         {statsByLevelCollection}
+        {displayScatterChart("Skill Rank", getStatsKey("SkillRank", props.skillRankData), props.skillRankData,
+          getQuartileRegression(props.skillRankData))}
+        {displayScatterChart("Learned Skill Rank", getStatsKey("LearnedSkillRank", props.learnedSkillRankData), props.learnedSkillRankData,
+          getQuartileRegression(props.learnedSkillRankData))}
         <h2>Moving Averages of Stats by Level</h2>
         <hr></hr>
         {displayRechart("HP", "HP" + getDataLength(hpData), hpData)}

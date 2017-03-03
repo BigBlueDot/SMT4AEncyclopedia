@@ -31,6 +31,36 @@ const getStatsByLevel = (demons, statName) => {
   return results;
 };
 
+const getSkillRankByLevel = (demons) => {
+  let results = [];
+  demons.filter(d => d.Level <= 100).forEach((demon) => {
+    let value = 0;
+    demon.Skills.filter(s => s.Rank !== 0).filter(s => s.LevelDiff !== 0).forEach((skill) => {
+      if (skill.Rank > value) value = skill.Rank;
+    });
+    results.push({
+      x: demon.Level,
+      y: value,
+    });
+  });
+  return results;
+};
+
+const getLearnedSkillRankByLevel = (demons) => {
+  let results = [];
+  demons.filter(d => d.Level <= 100).forEach((demon) => {
+    let result = {
+      x: demon.Level,
+      y: 0
+    };
+    demon.Skills.filter(s => s.Rank !== 0).filter(s => s.LevelDiff !== 0).forEach((skill) => {
+      if (skill.Rank > result.y) result = {x: demon.Level + skill.LevelDiff, y: skill.Rank};
+    });
+    results.push(result);
+  });
+  return results;
+};
+
 const getValuesForLevel = (demons, levelLabels, statName) => {
   // create empty array for each level
   let fullData = {};
@@ -136,6 +166,20 @@ export function loadLevelLabels () {
   };
 }
 
+export function loadSkillRanks () {
+  return {
+    type: "LOAD_SKILL_RANKS",
+    payload: {}
+  };
+}
+
+export function loadLearnedSkillRanks () {
+  return {
+    type: "LOAD_LEARNED_SKILL_RANKS",
+    payload: {}
+  };
+}
+
 export function loadMovingAvgStats (statName) {
   return {
     type: "LOAD_MOVING_AVG_STATS",
@@ -150,7 +194,9 @@ export function loadMovingAvgStats (statName) {
 export const actions = {
   loadMovingAvgStats,
   loadLevelLabels,
-  loadStatsByLevel
+  loadStatsByLevel,
+  loadSkillRanks,
+  loadLearnedSkillRanks,
 };
 
 // ------------------------------------
@@ -180,7 +226,33 @@ const ACTION_HANDLERS = {
           ...state.statsByLevel,
           [statName]: values
         }
-      })
+      });
+    }
+    else {
+      return state;
+    }
+  },
+  ["LOAD_SKILL_RANKS"]: (state, action) => {
+    if (state.skillRankData.length === 0) {
+      const demons = demon.demons;
+      const values = getSkillRankByLevel(demons);
+
+      return Object.assign({}, state, {
+        skillRankData: values
+      });
+    }
+    else {
+      return state;
+    }
+  },
+  ["LOAD_LEARNED_SKILL_RANKS"]: (state, action) => {
+    if (state.learnedSkillRankData.length === 0) {
+      const demons = demon.demons;
+      const values = getLearnedSkillRankByLevel(demons);
+
+      return Object.assign({}, state, {
+        learnedSkillRankData: values
+      });
     }
     else {
       return state;
@@ -222,6 +294,8 @@ const initialState = {
   levelLabels: [],
   movingAverages: {},
   statsByLevel: {},
+  skillRankData: [],
+  learnedSkillRankData: [],
 };
 export default function dataReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
