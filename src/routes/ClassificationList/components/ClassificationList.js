@@ -207,7 +207,7 @@ export const ClassificationList = (props) => {
       Growth: Growth,
     }
   });
-  console.dir(demons.length);
+
   return (
     <div style={{ margin: '0 auto' }} >
       <Griddle
