@@ -6,6 +6,7 @@ import CreatureListRoute from './CreatureList';
 import DataRoute from './Data';
 import DemonDisplayRoute from './DemonDisplay';
 import SkillListRoute from './SkillList';
+import ClassificationListRoute from './ClassificationList';
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -20,6 +21,7 @@ export const createRoutes = (store) => ({
     DataRoute(store),
     DemonDisplayRoute(store),
     SkillListRoute(store),
+    ClassificationListRoute(store)
   ]
 });
 
