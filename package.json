@@ -79,6 +79,7 @@
     "better-npm-run": "0.0.8",
     "chart.js": "^1.1.1",
     "classnames": "^2.2.4",
+    "clusters": "0.0.4",
     "co-request": "^1.0.0",
     "debug": "^2.2.0",
     "griddle-react": "^0.7.1",

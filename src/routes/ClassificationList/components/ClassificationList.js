@@ -5,6 +5,7 @@ import React from 'react';
 import demon from '../../../data/demon.json';
 import Griddle from 'griddle-react';
 import { Link } from 'react-router';
+import clusterMaker from 'clusters';
 
 const quartiles = {
   TOP: 'TOP',
@@ -20,10 +21,14 @@ const colors = {
   [quartiles.BOTTOM]: '#ff0000',
 };
 
+const getRankForState = (level, value, {upperB, upperM, centerB, centerM, lowerB, lowerM}) => {
+  if (value > upperM * level + upperB) return 1;
+  else if (value > centerM * level + centerB) return 2;
+  else if (value > lowerM * level + lowerB) return 3;
+  else return 4;
+};
+
 const getColorForStat = (level, value, {upperB, upperM, centerB, centerM, lowerB, lowerM}) => {
-  /*Upper Equation: y = 8.7x + 79.67
-   Center Equation: y = 7.64x + 61.27
-   Lower Equation: y = 6.5x + 52.95*/
   if (value > upperM * level + upperB) return colors[quartiles.TOP];
   else if (value > centerM * level + centerB) return colors[quartiles.UPPER];
   else if (value > lowerM * level + lowerB) return colors[quartiles.LOWER];
@@ -185,7 +190,33 @@ const columnMetadata = [{
   customCompareFn: function(item) {
     return parseFloat(item);
   }
+},{
+  columnName: "Cluster",
+  displayName: "Cluster",
+  sortable: true,
+  customCompareFn: function(item) {
+    return parseFloat(item);
+  }
 }];
+
+const properties = ["Level", "HP", "MP", "SkillRank", "Growth", "Strength", "Dexterity", "Magic", "Agility", "Luck"];
+
+const calculateDistance = (demonOne, demonTwo) => {
+  let sum = 0;
+  properties.forEach((p) => {
+    sum += Math.pow(demonTwo[p] - demonOne[p], 2)
+  });
+  return Math.sqrt(sum)
+};
+
+const calculateClassifierDistance = (demonOne, demonTwo) => {
+  // data is in array format, so just calculate that
+  let sum = 0;
+  for (let i=0; i<demonOne.length; i++) {
+    sum += Math.pow(demonTwo[i] - demonOne[i], 2)
+  }
+  return Math.sqrt(sum);
+};
 
 export const ClassificationList = (props) => {
   const demons = demon.demons.map((demon) => {
@@ -208,15 +239,81 @@ export const ClassificationList = (props) => {
     }
   });
 
+  let primarySkillTypes = [];
+  let secondarySkillTypes = [];
+  demons.forEach((demon) => {
+    demon.Skills.forEach((s) => {
+      if (!primarySkillTypes.includes(s.SkillType)) primarySkillTypes.push(s.SkillType);
+      if (!secondarySkillTypes.includes(s.SecondarySkillType)) secondarySkillTypes.push(s.SecondarySkillType);
+    });
+  });
+
+  const classifiers = columnMetadata.filter((cmd) => properties.includes(cmd.columnName));
+
+  const mapDemonToClassifiers = (demon) => {
+    let result = [];
+    classifiers.forEach((c) => {
+      result.push(getRankForState(demon.Level, demon[c.columnName], c));
+    });
+    primarySkillTypes.forEach((p) => {
+      let count = 0;
+      demons.forEach((demon) => {
+        demon.Skills.forEach((s) => {
+          if (s.SkillType === p) count++;
+        })
+      });
+      result.push(count)
+    });
+    secondarySkillTypes.forEach((p) => {
+      let count = 0;
+      demons.forEach((demon) => {
+        demon.Skills.forEach((s) => {
+          if (s.SecondarySkillType === p) count++;
+        })
+      });
+      result.push(count)
+    });
+    return result;
+  };
+
+  const data = demons.map(mapDemonToClassifiers);
+
+  clusterMaker.k(5);
+  clusterMaker.iterations(500);
+
+  clusterMaker.data(data);
+
+  const centroids = clusterMaker.clusters().map((f) => {
+    return f.centroid;
+  });
+
+  const demonsWithCluster = demons.map((demon) => {
+    let currentDistance = Number.MAX_SAFE_INTEGER;
+    let currentIndex = -1;
+    for (let i = 0; i < centroids.length; i++) {
+      const c = centroids[i];
+      const thisDistance = calculateClassifierDistance(mapDemonToClassifiers(demon), c);
+      if (thisDistance < currentDistance) {
+        currentDistance = thisDistance;
+        currentIndex = i;
+      }
+    }
+
+    return {
+      ...demon,
+      Cluster: currentIndex
+    }
+  });
+
   return (
     <div style={{ margin: '0 auto' }} >
       <Griddle
-        results={demons}
+        results={demonsWithCluster}
         enableInfiniteScroll={true}
         bodyHeight={400}
         useFixedHeader={true}
         showFilter={true}
-        columns={["Name", "Level", "Race", "HP", "MP", "Strength", "Dexterity", "Magic", "Agility", "Luck", "SkillRank", "Growth"]}
+        columns={["Name", "Level", "Race", "HP", "MP", "Strength", "Dexterity", "Magic", "Agility", "Luck", "SkillRank", "Growth", "Cluster"]}
         columnMetadata={columnMetadata} />
     </div>
   );
